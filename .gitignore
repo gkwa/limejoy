@@ -1,3 +1,5 @@
 limejoy
 dist/
 .timestamps/
+token.json
+manifest.json
