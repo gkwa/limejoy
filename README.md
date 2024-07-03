@@ -2,11 +2,13 @@
 
 Purpose:
 
+Fetch google photos file list to manifest.json.
+
 
 ## example usage
 
 ```bash
-
+make && ./limejoy
 
 ```
 
