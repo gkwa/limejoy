@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 
 	gphotos "github.com/gphotosuploader/google-photos-api-client-go/v3"
@@ -35,16 +37,28 @@ func main() {
 		return
 	}
 
+	config.RedirectURL = "http://localhost:8080/auth/google/callback"
+
+	authCode := ""
+	codeChan := make(chan string)
+
+	http.HandleFunc("/auth/google/callback", func(w http.ResponseWriter, r *http.Request) {
+		code := r.URL.Query().Get("code")
+		codeChan <- code
+		fmt.Fprintf(w, "Authorization successful! You can close this window now.")
+	})
+
+	go func() {
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			log.Fatalf("Failed to start server: %v", err)
+		}
+	}()
+
 	authURL := config.AuthCodeURL("state-token", oauth2.AccessTypeOffline)
 	fmt.Printf("Visit the URL for the auth dialog: %v\n", authURL)
 
-	fmt.Fprint(os.Stdout, "scan\n")
-
-	var authCode string
-	if _, err := fmt.Scan(&authCode); err != nil {
-		fmt.Printf("error reading authorization code: %v", err)
-		return
-	}
+	authCode = <-codeChan
 
 	token, err := config.Exchange(ctx, authCode)
 	if err != nil {
