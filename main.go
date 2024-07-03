@@ -62,7 +62,18 @@ func main() {
 	}
 
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
+	startTime := time.Now()
 	s.Suffix = " fetching list of Google photos..."
+
+	updateSpinner := func(s *spinner.Spinner) {
+		elapsed := time.Since(startTime)
+		hours := int(elapsed.Hours())
+		minutes := int(elapsed.Minutes()) % 60
+		seconds := int(elapsed.Seconds()) % 60
+		s.Suffix = fmt.Sprintf(" fetching list of Google photos... (Time elapsed: %02d:%02d:%02d)", hours, minutes, seconds)
+	}
+
+	s.PreUpdate = updateSpinner
 	s.Start()
 
 	var allMediaItems []media_items.MediaItem
