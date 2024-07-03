@@ -21,7 +21,9 @@ func main() {
 
 	ctx := context.Background()
 
-	b, err := os.ReadFile("credentials.json")
+	credsPath := "/Users/mtm/Downloads/client_secret_20836135302-f2fj886fcj8ggfr8bjf52l4jfuknokg1.apps.googleusercontent.com.json"
+
+	b, err := os.ReadFile(credsPath)
 	if err != nil {
 		fmt.Printf("error reading credentials.json: %v", err)
 		return
@@ -35,6 +37,8 @@ func main() {
 
 	authURL := config.AuthCodeURL("state-token", oauth2.AccessTypeOffline)
 	fmt.Printf("Visit the URL for the auth dialog: %v\n", authURL)
+
+	fmt.Fprint(os.Stdout, "scan\n")
 
 	var authCode string
 	if _, err := fmt.Scan(&authCode); err != nil {
