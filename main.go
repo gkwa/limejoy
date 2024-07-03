@@ -61,16 +61,13 @@ func main() {
 		return
 	}
 
-	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
+	s := spinner.New(spinner.CharSets[32], 100*time.Millisecond)
 	startTime := time.Now()
 	s.Suffix = " fetching list of Google photos..."
 
 	updateSpinner := func(s *spinner.Spinner) {
 		elapsed := time.Since(startTime)
-		hours := int(elapsed.Hours())
-		minutes := int(elapsed.Minutes()) % 60
-		seconds := int(elapsed.Seconds()) % 60
-		s.Suffix = fmt.Sprintf(" fetching list of Google photos... (Time elapsed: %02d:%02d:%02d)", hours, minutes, seconds)
+		s.Suffix = fmt.Sprintf(" %s fetching list of Google photos...", formatDuration(elapsed))
 	}
 
 	s.PreUpdate = updateSpinner
@@ -97,7 +94,8 @@ func main() {
 	}
 
 	s.Stop()
-	fmt.Printf("Fetched %d media items\n", len(allMediaItems))
+	totalDuration := time.Since(startTime)
+	fmt.Printf("Fetched %d media items in %s\n", len(allMediaItems), formatDuration(totalDuration))
 
 	s.Suffix = " Writing manifest..."
 	s.Start()
@@ -120,6 +118,23 @@ func main() {
 
 	s.Stop()
 	fmt.Println("Manifest created successfully")
+}
+
+func formatDuration(d time.Duration) string {
+	d = d.Round(time.Second)
+	h := d / time.Hour
+	d -= h * time.Hour
+	m := d / time.Minute
+	d -= m * time.Minute
+	s := d / time.Second
+
+	if h > 0 {
+		return fmt.Sprintf("%dh%dm%ds", h, m, s)
+	}
+	if m > 0 {
+		return fmt.Sprintf("%dm%ds", m, s)
+	}
+	return fmt.Sprintf("%ds", s)
 }
 
 func getTokenFromWeb(config *oauth2.Config) (*oauth2.Token, error) {
