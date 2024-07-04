@@ -34,6 +34,7 @@ func main() {
 		os.Exit(0)
 	}
 
+	prettyPrinter := message.NewPrinter(language.English)
 	ctx := context.Background()
 	credsPath, err := homedir.Expand(credsPath)
 	if err != nil {
@@ -81,9 +82,8 @@ func main() {
 	var allMediaItems []media_items.MediaItem
 	updateSpinner := func(s *spinner.Spinner) {
 		elapsed := time.Since(startTime)
-		p := message.NewPrinter(language.English)
-		withCommaThousandSep := p.Sprintf("%d", len(allMediaItems))
-		s.Suffix = fmt.Sprintf(" %s fetching list of Google photos... (Items: %s)", formatDuration(elapsed), withCommaThousandSep)
+		t := prettyPrinter.Sprintf("%d", len(allMediaItems))
+		s.Suffix = fmt.Sprintf(" %s fetching list of Google photos... (Items: %s)", formatDuration(elapsed), t)
 	}
 
 	s.PreUpdate = updateSpinner
@@ -110,9 +110,8 @@ func main() {
 
 	s.Stop()
 	totalDuration := time.Since(startTime)
-	p := message.NewPrinter(language.English)
-	withCommaThousandSep := p.Sprintf("%d", len(allMediaItems))
-	fmt.Printf("Fetched %s media items in %s\n", withCommaThousandSep, formatDuration(totalDuration))
+	t := prettyPrinter.Sprintf("%d", len(allMediaItems))
+	fmt.Printf("Fetched %s media items in %s\n", t, formatDuration(totalDuration))
 
 	s.Suffix = " Writing manifest..."
 	s.Start()
