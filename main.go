@@ -9,8 +9,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/dustin/go-humanize"
 	"github.com/mitchellh/go-homedir"
+
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
 
 	"github.com/briandowns/spinner"
 	gphotos "github.com/gphotosuploader/google-photos-api-client-go/v3"
@@ -21,8 +23,8 @@ import (
 
 const (
 	manifestPath = "./manifest.json"
-	tokenPath = "./token.json"
-	credsPath = "~/Downloads/client_secret_20836135302-f2fj886fcj8ggfr8bjf52l4jfuknokg1.apps.googleusercontent.com.json"
+	tokenPath    = "./token.json"
+	credsPath    = "~/Downloads/client_secret_20836135302-f2fj886fcj8ggfr8bjf52l4jfuknokg1.apps.googleusercontent.com.json"
 )
 
 func main() {
@@ -79,7 +81,9 @@ func main() {
 	var allMediaItems []media_items.MediaItem
 	updateSpinner := func(s *spinner.Spinner) {
 		elapsed := time.Since(startTime)
-		s.Suffix = fmt.Sprintf(" %s fetching list of Google photos... (Items: %s)", formatDuration(elapsed), humanize.Comma(int64(len(allMediaItems))))
+		p := message.NewPrinter(language.English)
+		withCommaThousandSep := p.Sprintf("%d", len(allMediaItems))
+		s.Suffix = fmt.Sprintf(" %s fetching list of Google photos... (Items: %s)", formatDuration(elapsed), withCommaThousandSep)
 	}
 
 	s.PreUpdate = updateSpinner
@@ -106,7 +110,9 @@ func main() {
 
 	s.Stop()
 	totalDuration := time.Since(startTime)
-	fmt.Printf("Fetched %s media items in %s\n", humanize.Comma(int64(len(allMediaItems))), formatDuration(totalDuration))
+	p := message.NewPrinter(language.English)
+	withCommaThousandSep := p.Sprintf("%d", len(allMediaItems))
+	fmt.Printf("Fetched %s media items in %s\n", withCommaThousandSep, formatDuration(totalDuration))
 
 	s.Suffix = " Writing manifest..."
 	s.Start()
