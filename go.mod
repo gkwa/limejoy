@@ -8,6 +8,7 @@ require (
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/gphotosuploader/google-photos-api-client-go/v3 v3.0.5
 	github.com/magefile/mage v1.15.0
+	github.com/mitchellh/go-homedir v1.1.0
 	golang.org/x/oauth2 v0.21.0
 )
 

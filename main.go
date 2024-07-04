@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/dustin/go-humanize"
+	"github.com/mitchellh/go-homedir"
 
 	"github.com/briandowns/spinner"
 	gphotos "github.com/gphotosuploader/google-photos-api-client-go/v3"
@@ -18,7 +19,11 @@ import (
 	"golang.org/x/oauth2/google"
 )
 
-const tokenFile = "token.json"
+const (
+	manifestPath = "./manifest.json"
+	tokenPath = "./token.json"
+	credsPath = "~/Downloads/client_secret_20836135302-f2fj886fcj8ggfr8bjf52l4jfuknokg1.apps.googleusercontent.com.json"
+)
 
 func main() {
 	if len(os.Args) > 1 && (os.Args[1] == "-version" || os.Args[1] == "version" || os.Args[1] == "-v") {
@@ -28,7 +33,11 @@ func main() {
 	}
 
 	ctx := context.Background()
-	credsPath := "/Users/mtm/Downloads/client_secret_20836135302-f2fj886fcj8ggfr8bjf52l4jfuknokg1.apps.googleusercontent.com.json"
+	credsPath, err := homedir.Expand(credsPath)
+	if err != nil {
+		log.Fatalf("Error expanding path: %v", err)
+	}
+
 	b, err := os.ReadFile(credsPath)
 	if err != nil {
 		fmt.Printf("error reading credentials.json: %v", err)
@@ -43,14 +52,14 @@ func main() {
 
 	config.RedirectURL = "http://localhost:8080/auth/google/callback"
 
-	token, err := tokenFromFile(tokenFile)
+	token, err := tokenFromFile(tokenPath)
 	if err != nil {
 		token, err = getTokenFromWeb(config)
 		if err != nil {
 			fmt.Printf("Unable to get token: %v", err)
 			return
 		}
-		if err := saveToken(tokenFile, token); err != nil {
+		if err := saveToken(tokenPath, token); err != nil {
 			fmt.Printf("Unable to save token: %v", err)
 			return
 		}
@@ -102,8 +111,7 @@ func main() {
 	s.Suffix = " Writing manifest..."
 	s.Start()
 
-	manifest := "manifest.json"
-	file, err := os.Create(manifest)
+	file, err := os.Create(manifestPath)
 	if err != nil {
 		s.Stop()
 		fmt.Printf("error creating manifest.json: %v", err)
@@ -120,7 +128,7 @@ func main() {
 	}
 
 	s.Stop()
-	fmt.Printf("%s created successfully\n", manifest)
+	fmt.Printf("%s created successfully\n", manifestPath)
 }
 
 func formatDuration(d time.Duration) string {
