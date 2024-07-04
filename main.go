@@ -9,6 +9,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/dustin/go-humanize"
+
 	"github.com/briandowns/spinner"
 	gphotos "github.com/gphotosuploader/google-photos-api-client-go/v3"
 	"github.com/gphotosuploader/google-photos-api-client-go/v3/media_items"
@@ -61,19 +63,19 @@ func main() {
 		return
 	}
 
-	s := spinner.New(spinner.CharSets[32], 100*time.Millisecond)
+	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	startTime := time.Now()
 	s.Suffix = " fetching list of Google photos..."
 
+	var allMediaItems []media_items.MediaItem
 	updateSpinner := func(s *spinner.Spinner) {
 		elapsed := time.Since(startTime)
-		s.Suffix = fmt.Sprintf(" %s fetching list of Google photos...", formatDuration(elapsed))
+		s.Suffix = fmt.Sprintf(" %s fetching list of Google photos... (Items: %s)", formatDuration(elapsed), humanize.Comma(int64(len(allMediaItems))))
 	}
 
 	s.PreUpdate = updateSpinner
 	s.Start()
 
-	var allMediaItems []media_items.MediaItem
 	var nextPageToken string
 	for {
 		options := &media_items.PaginatedListOptions{
@@ -95,12 +97,13 @@ func main() {
 
 	s.Stop()
 	totalDuration := time.Since(startTime)
-	fmt.Printf("Fetched %d media items in %s\n", len(allMediaItems), formatDuration(totalDuration))
+	fmt.Printf("Fetched %s media items in %s\n", humanize.Comma(int64(len(allMediaItems))), formatDuration(totalDuration))
 
 	s.Suffix = " Writing manifest..."
 	s.Start()
 
-	file, err := os.Create("manifest.json")
+	manifest := "manifest.json"
+	file, err := os.Create(manifest)
 	if err != nil {
 		s.Stop()
 		fmt.Printf("error creating manifest.json: %v", err)
@@ -117,7 +120,7 @@ func main() {
 	}
 
 	s.Stop()
-	fmt.Println("Manifest created successfully")
+	fmt.Printf("%s created successfully\n", manifest)
 }
 
 func formatDuration(d time.Duration) string {
