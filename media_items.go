@@ -14,7 +14,7 @@ import (
 	"golang.org/x/text/message"
 )
 
-func fetchMediaItems(ctx context.Context, gphotosClient *gphotos.Client) ([]media_items.MediaItem, error) {
+func generateMediaItemsManifest(ctx context.Context, gphotosClient *gphotos.Client) ([]media_items.MediaItem, error) {
 	prettyPrinter := message.NewPrinter(language.English)
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	startTime := time.Now()

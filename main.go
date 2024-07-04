@@ -43,7 +43,7 @@ func main() {
 		return
 	}
 
-	allMediaItems, err := fetchMediaItems(ctx, gphotosClient)
+	allMediaItems, err := generateMediaItemsManifest(ctx, gphotosClient)
 	if err != nil {
 		fmt.Printf("Error fetching media items: %v\n", err)
 		return
