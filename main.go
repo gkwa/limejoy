@@ -24,7 +24,7 @@ func main() {
 	}
 
 	ctx := context.Background()
-	config, err := getGoogleConfig(ctx)
+	config, err := getGoogleConfig()
 	if err != nil {
 		fmt.Printf("Error getting Google config: %v\n", err)
 		return
@@ -58,7 +58,7 @@ func main() {
 	fmt.Printf("%s created successfully\n", manifestPath)
 }
 
-func getGoogleConfig(ctx context.Context) (*oauth2.Config, error) {
+func getGoogleConfig() (*oauth2.Config, error) {
 	credsPath, err := homedir.Expand(credsPath)
 	if err != nil {
 		return nil, fmt.Errorf("error expanding path: %v", err)
