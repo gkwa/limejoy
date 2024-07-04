@@ -1,6 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
+
+func checkVersion() bool {
+	if len(os.Args) > 1 && (os.Args[1] == "-version" || os.Args[1] == "version" || os.Args[1] == "-v") {
+		buildInfo := GetBuildInfo()
+		fmt.Println(buildInfo)
+		return true
+	}
+	return false
+}
 
 type BuildInfo struct {
 	Date        string
