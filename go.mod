@@ -1,4 +1,4 @@
-module example.com/hello
+module github.com/gkwa/limejoy
 
 go 1.22.4
 
