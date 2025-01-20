@@ -3,7 +3,7 @@ module github.com/gkwa/limejoy
 go 1.22.4
 
 require (
-	github.com/briandowns/spinner v1.23.1
+	github.com/briandowns/spinner v1.23.2
 	github.com/go-git/go-git/v5 v5.13.1
 	github.com/gphotosuploader/google-photos-api-client-go/v3 v3.0.6
 	github.com/magefile/mage v1.15.0
