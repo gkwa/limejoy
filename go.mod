@@ -7,7 +7,7 @@ toolchain go1.24.3
 require (
 	github.com/briandowns/spinner v1.23.2
 	github.com/go-git/go-git/v5 v5.16.0
-	github.com/gphotosuploader/google-photos-api-client-go/v3 v3.0.7
+	github.com/gphotosuploader/google-photos-api-client-go/v3 v3.0.8
 	github.com/magefile/mage v1.15.0
 	github.com/mitchellh/go-homedir v1.1.0
 	golang.org/x/oauth2 v0.30.0
@@ -15,7 +15,7 @@ require (
 )
 
 require (
-	cloud.google.com/go/compute/metadata v0.6.0 // indirect
+	cloud.google.com/go/compute/metadata v0.7.0 // indirect
 	dario.cat/mergo v1.0.0 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/ProtonMail/go-crypto v1.1.6 // indirect
@@ -37,10 +37,10 @@ require (
 	github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3 // indirect
 	github.com/skeema/knownhosts v1.3.1 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	golang.org/x/crypto v0.37.0 // indirect
-	golang.org/x/net v0.39.0 // indirect
-	golang.org/x/sys v0.32.0 // indirect
-	golang.org/x/term v0.31.0 // indirect
-	google.golang.org/api v0.222.0 // indirect
+	golang.org/x/crypto v0.38.0 // indirect
+	golang.org/x/net v0.40.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/term v0.32.0 // indirect
+	google.golang.org/api v0.235.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )
