@@ -6,7 +6,7 @@ toolchain go1.25.1
 
 require (
 	github.com/briandowns/spinner v1.23.2
-	github.com/go-git/go-git/v5 v5.16.2
+	github.com/go-git/go-git/v5 v5.16.3
 	github.com/gphotosuploader/google-photos-api-client-go/v3 v3.0.9
 	github.com/magefile/mage v1.15.0
 	github.com/mitchellh/go-homedir v1.1.0
