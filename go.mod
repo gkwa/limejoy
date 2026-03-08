@@ -1,6 +1,6 @@
 module github.com/gkwa/limejoy
 
-go 1.24.0
+go 1.25.0
 
 toolchain go1.26.1
 
@@ -10,7 +10,7 @@ require (
 	github.com/gphotosuploader/google-photos-api-client-go/v3 v3.0.9
 	github.com/magefile/mage v1.16.0
 	github.com/mitchellh/go-homedir v1.1.0
-	golang.org/x/oauth2 v0.35.0
+	golang.org/x/oauth2 v0.36.0
 	golang.org/x/text v0.34.0
 )
 
