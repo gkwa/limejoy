@@ -6,7 +6,7 @@ toolchain go1.26.5
 
 require (
 	github.com/briandowns/spinner v1.23.2
-	github.com/go-git/go-git/v5 v5.19.1
+	github.com/go-git/go-git/v5 v5.19.2
 	github.com/gphotosuploader/google-photos-api-client-go/v3 v3.0.9
 	github.com/magefile/mage v1.17.2
 	github.com/mitchellh/go-homedir v1.1.0
@@ -38,10 +38,10 @@ require (
 	github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3 // indirect
 	github.com/skeema/knownhosts v1.3.1 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	golang.org/x/crypto v0.50.0 // indirect
-	golang.org/x/net v0.53.0 // indirect
-	golang.org/x/sys v0.43.0 // indirect
-	golang.org/x/term v0.42.0 // indirect
+	golang.org/x/crypto v0.53.0 // indirect
+	golang.org/x/net v0.56.0 // indirect
+	golang.org/x/sys v0.46.0 // indirect
+	golang.org/x/term v0.44.0 // indirect
 	google.golang.org/api v0.248.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )
